@@ -1,0 +1,21 @@
+{
+  "name": "turtleetowrkposdistributor",
+  "version": "0.0.1",
+  "description": "An LPoS distributor for the Turtle Networkd",
+  "main": "appFastNGHOLD.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lpos",
+    "Turtle Network",
+    "blockchain"
+  ],
+  "author": "BoxiGod",
+  "license": "ISC",
+  "dependencies": {
+    "line-reader-sync": "^0.1.0",
+    "request": "^2.81.0",
+    "sync-request": "^4.0.2"
+  }
+}
