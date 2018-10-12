@@ -13,12 +13,16 @@ var fs = require('fs');
  *     - decimalsoftoken: decimals of node's token
  *     - filename: file to which the payments for the mass payment tool are written
  *     - node: address of your node in the form http://<ip>:<port
- *     - percentageOfFeesToDistribute: the percentage of Waves fees that you want to distribute
+ *     - percentageOfFeesToDistribute: the percentage of fees that you want to distribute
  *     - blockStorage: file for storing block history
  *     - assetId: id of node's token
  *     - excludeList: List, who will not get bonus for hold token, for ex. issuer, exchanges.
  *     - percentageOfFeesToDistributeHOLDers: Percentage of earned fees to distribute to holders of node's token.
  *     - minAmounttoPayTN: TN min amount to pay
+ *     - minHold: min hold to get for holding
+ *     - MinIfNotLease: min getting amount if not leasing, but holding node's token, where 2000000 = 0.02 TN
+ *     - MinIfLeaseAndHold:  min amount if leasing and holding 
+ *     - minBTNpays: Min amount of node's token
  */
 var config = {
 address: '', 
@@ -29,11 +33,11 @@ distributableBTNPerBlock: 10,
 decimalsoftoken: 3, // put here decimals of node's token
 filename: 'payments.json', // put here the file name where the payments needs to be written
 node: 'http://localhost:6861', // put here the address of REST API
-percentageOfFeesToDistribute: 80, // put here the percentage of fees you want to distribute
+percentageOfFeesToDistribute: 80, // put here the percentage of fees you want to distribute to leasers
 blockStorage: 'blocks.json',
 assetId: '', // put here assetId of node's token
 excludeList: [''], // put here address, which won't get fee for holding node's token
-percentageOfFeesToDistributeHOLDers: 10, // put here how much distribute to holders, can be 0.
+percentageOfFeesToDistributeHOLDers: 10, // put here how much distribute to holders. Can be 0, if you don't have holders or don't want to distribute to them.
 minAmounttoPayTN: 0, // put here TN min amount to pay, where 2000000 = 0.02 TN
 minHold: 1000, //min hold to get for holding
 MinIfNotLease: 2000000, //min getting amount if not leasing, but holding node's token, where 2000000 = 0.02 TN
