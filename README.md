@@ -43,7 +43,7 @@ percentageOfFeesToDistribute: 80, // put here the percentage of fees you want to
 blockStorage: 'blocks.json', // put here file for storing block history
 assetId: '', // put here assetId of node's token
 excludeList: [''], // put here address, which won't get fee for holding node's token
-percentageOfFeesToDistributeHOLDers: 20, // put here how much distribute to holders, can be 0.
+percentageOfFeesToDistributeHOLDers: 20, // put here how much distribute to holders. Can be 0, if you don't have holders or don't want to distribute to them.
 minAmounttoPayTN: 0, // put here TN min amount to pay
 minAmountToPayBTN: 0 // put here node's token min amount to pay
 };
@@ -103,7 +103,7 @@ var config = {
     filename: 'payments.json', // put the file name where payments have been written.
     node: 'http://localhost:6861', // put the IP address of your REST API node
     apiKey: '', // put your secret API Key
-    feeAssetId: null, // TN token
+    feeAssetId: null, // null = TN token
     feeAssetId2: "", //assetId of node's token
     fee: 2000000, // put 2000000 (0.02 TN)
     x: 0 // if 0 - check transactions, 1 - do trans. DO FIRST RUN WITH 0 TO CHECK THE TRANSACTIONS
