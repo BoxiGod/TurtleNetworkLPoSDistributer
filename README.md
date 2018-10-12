@@ -39,13 +39,16 @@ distributableBTNPerBlock: 10, // put here amount of node's token distributed per
 decimalsoftoken: 3, // put here decimals of node's token
 filename: 'payments.json', // put here the file name where the payments needs to be written
 node: 'http://localhost:6861', // put here the address of REST API
-percentageOfFeesToDistribute: 80, // put here the percentage of fees you want to distribute
+percentageOfFeesToDistribute: 80, // put here the percentage of fees you want to distribute to leasers
 blockStorage: 'blocks.json', // put here file for storing block history
 assetId: '', // put here assetId of node's token
 excludeList: [''], // put here address, which won't get fee for holding node's token
 percentageOfFeesToDistributeHOLDers: 20, // put here how much distribute to holders. Can be 0, if you don't have holders or don't want to distribute to them.
-minAmounttoPayTN: 0, // put here TN min amount to pay
-minAmountToPayBTN: 0 // put here node's token min amount to pay
+minAmounttoPayTN: 0, // put here TN min amount to pay, where 2000000 = 0.02 TN
+minHold: 1000, //min hold to get for holding
+MinIfNotLease: 2000000, //min getting amount if not leasing, but holding node's token, where 2000000 = 0.02 TN
+MinIfLeaseAndHold: 0, // min amount if leasing and holding 
+minBTNpays: 1 //Min amount of node's token
 };
 ```
 After configuration, the script could be started with:
