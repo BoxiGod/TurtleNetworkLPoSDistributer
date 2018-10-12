@@ -21,7 +21,7 @@ Once the dependencies are installed, the script that generates the payouts need 
  *     - decimalsoftoken: decimals of node's token
  *     - filename: file to which the payments for the mass payment tool are written
  *     - node: address of your node in the form http://<ip>:<port
- *     - percentageOfFeesToDistribute: the percentage of Waves fees that you want to distribute
+ *     - percentageOfFeesToDistribute: the percentage of fees that you want to distribute
  *     - blockStorage: file for storing block history
  *     - assetId: id of node's token
  *     - excludeList: List, who will not get bonus for hold token, for ex. issuer, exchanges.
