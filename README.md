@@ -27,8 +27,10 @@ Once the dependencies are installed, the script that generates the payouts need 
  *     - excludeList: List, who will not get bonus for hold token, for ex. issuer, exchanges.
  *     - percentageOfFeesToDistributeHOLDers: Percentage of earned fees to distribute to holders of node's token.
  *     - minAmounttoPayTN: TN min amount to pay
- *     - minAmountToPayBTN: node's token min amount to pay
-
+ *     - minHold: min hold to get for holding
+ *     - MinIfNotLease: min getting amount if not leasing, but holding node's token, where 2000000 = 0.02 TN
+ *     - MinIfLeaseAndHold:  min amount if leasing and holding 
+ *     - minBTNpays: Min amount of node's token
  */
 var config = {
 address: '', //put here the address of your node that you want to distribute from
