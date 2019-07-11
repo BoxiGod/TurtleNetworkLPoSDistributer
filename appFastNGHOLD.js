@@ -109,7 +109,8 @@ var richlist;
     if (config.assetId && config.assetId.length > 0) {
         richlist= JSON.parse(syncRequest('GET', config.node + '/assets/' + config.assetId + '/distribution', {
             'headers': {
-                'Connection': 'keep-alive'
+                'Connection': 'keep-alive',
+                'api-key': config.apiKey
             }
         }).getBody());
     } else {
@@ -287,7 +288,7 @@ var pay = function(richlist) {
                 "recipient": address
             });
         }
-        if (Number(Math.round(BTN[address] * Math.pow(10, config.decimalsoftoken))) > Number((config.minBTNpays*Math.pow(10,config.decimalsoftoken)))) {
+        if (Number(Math.round(BTN[address] * Math.pow(10, config.decimalsoftoken))) > Number((config.minBTNpays*Math.pow(10,config.decimalsoftoken))) && (config.assetId != '')) {
             transactionsG.push({
                 "amount": Number(Math.round(BTN[address] * Math.pow(10, config.decimalsoftoken))),
                 "fee": 2000000,
