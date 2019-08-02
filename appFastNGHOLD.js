@@ -174,6 +174,7 @@ var prepareDataStructure = function(blocks) {
  *
  * @returns {Array} all relevant blocks
  */
+var getAllBlocks = function() {
  var firstBlockWithLeases = 1;
     var currentStartBlock = firstBlockWithLeases;
     var blocks = [];
