@@ -117,7 +117,7 @@ var richlist;
         richlist= JSON.parse(syncRequest('GET', config.node + '/debug/stateTN/' + config.endBlock, {
             'headers': {
                 'Connection': 'keep-alive',
-                'api-key': config.apiKey
+                'api_key': config.apiKey
             }
         }).getBody());
     }
