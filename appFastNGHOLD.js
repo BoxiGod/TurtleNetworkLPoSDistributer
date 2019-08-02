@@ -25,7 +25,8 @@ var fs = require('fs');
  *     - minBTNpays: Min amount of node's token
  */
 var config = {
-address: '', 
+address: '',
+apiKey: '',
 alias: 'Your node alias',
 startBlockHeight: 1,
 endBlock: 76720, // put here the block height you want to calculate the payment distribution
