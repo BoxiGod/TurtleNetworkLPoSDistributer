@@ -78,7 +78,7 @@ var preparePayment = function(payments) {
 
 var doPayment = function (payments, timestamp, trans, assId, count) {
     var payment = payments[0];
-    var txFee = config.fee + 1000000 * count;
+    var txFee = config.fee + 1000000 * (count + 1);
     var data = {
         "version": 1,
         "assetId": assId,
