@@ -37,6 +37,7 @@ percentageOfFeesToDistribute: 80, // put here the percentage of fees you want to
 blockStorage: 'blocks.json',
 assetId: '', // put here assetId of node's token
 excludeList: [''], // put here address, which won't get fee for holding node's token
+excludeListTN: [''], // put here address, which won't get TN distributed to them
 percentageOfFeesToDistributeHOLDers: 10, // put here how much distribute to holders. Can be 0, if you don't have holders or don't want to distribute to them.
 minAmounttoPayTN: 0, // put here TN min amount to pay, where 2000000 = 0.02 TN
 minHold: 1000, //min hold to get for holding
@@ -65,13 +66,12 @@ var transactionsG = [];
  * masspayment tool.
  */
 var start = function() {
-    console.log('getting blocks...');
+  console.log('getting blocks...');
     var blocks = getAllBlocks();
-    if (fs.existsSync(config.blockStorage)) {
-        fs.unlinkSync(config.blockStorage);
-    }
     console.log('preparing datastructures...');
     prepareDataStructure(blocks);
+
+    //clear already payed transaction information
     blocks.forEach(function(block) {
         var transactions = [];
 
@@ -84,16 +84,15 @@ var start = function() {
         } else {
             transactions = block.transactions;
         }
-
-        var blockInfo = {
-            height: block.height,
-            generator: block.generator,
-            wavesFees: block.wavesFees,
-            previousBlockWavesFees: block.previousBlockWavesFees,
-            transactions: transactions
-        };
-        fs.appendFileSync(config.blockStorage, JSON.stringify(blockInfo) + '\n');
+        block.transactions = transactions;
     });
+
+    var blockJSON = JSON.stringify(blocks, null, 4);
+    if (fs.existsSync(config.blockStorage)) {
+       fs.unlinkSync(config.blockStorage);
+    }
+    fs.writeFileSync(config.blockStorage, blockJSON);
+
     console.log('preparing payments...');
     myForgedBlocks.forEach(function(block) {
         if (block.height >= config.startBlockHeight && block.height <= config.endBlock) {
@@ -104,6 +103,7 @@ var start = function() {
             distribute(activeLeasesForBlock, amountTotalLeased, block);
         }
     });
+    console.log('forged blocks: ' + myForgedBlocks.length)
 var richlist;
 
     if (config.assetId && config.assetId.length > 0) {
@@ -173,23 +173,26 @@ var prepareDataStructure = function(blocks) {
  *
  * @returns {Array} all relevant blocks
  */
-var getAllBlocks = function() {
-    // leases have been resetted in block 462000, therefore, this is the first relevant block to be considered
-    var firstBlockWithLeases = 1;
+ var firstBlockWithLeases = 1;
     var currentStartBlock = firstBlockWithLeases;
     var blocks = [];
     var steps = 100;
 
     if (fs.existsSync(config.blockStorage)) {
-        lrs = new LineReaderSync(config.blockStorage);
+        try {
+            var blockFile = fs.readFileSync(config.blockStorage);
+            blocks = JSON.parse(blockFile);
+        } catch (error) {
+            lrs = new LineReaderSync(config.blockStorage);
 
-        var lineFound = true;
-        while(lineFound){
-            var line = lrs.readline()
-            if(line){
-                blocks.push(JSON.parse(line));
-            } else {
-                lineFound = false;
+            var lineFound = true;
+            while(lineFound){
+                var line = lrs.readline()
+                if(line){
+                    blocks.push(JSON.parse(line));
+                } else {
+                    lineFound = false;
+                }
             }
         }
 
@@ -239,6 +242,7 @@ var getAllBlocks = function() {
     return blocks;
 };
 
+
 /**
  * This method distributes either Waves fees and MRT to the active leasers for
  * the given block.
@@ -278,7 +282,12 @@ var distribute = function(activeLeases, amountTotalLeased, block, previousBlock)
 var pay = function(richlist) {
     for (var address in payments) {
         var payment = (payments[address] / Math.pow(10, 8));
-
+        
+          if (config.excludeListTN.includes(address)) {
+            console.log(address + ' excluded');
+            payments[address] = 0;
+        }
+        
         if (Number(Math.round(payments[address])) > config.minAmounttoPayTN && !(richlist[address] > config.minHold)) {
             transactionsG.push({
                 "amount": Number(Math.round(payments[address])),
