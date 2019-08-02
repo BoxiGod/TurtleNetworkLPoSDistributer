@@ -110,14 +110,14 @@ var richlist;
     if (config.assetId && config.assetId.length > 0) {
         richlist= JSON.parse(syncRequest('GET', config.node + '/assets/' + config.assetId + '/distribution', {
             'headers': {
-                'Connection': 'keep-alive',
-                'api-key': config.apiKey
+                'Connection': 'keep-alive'
             }
         }).getBody());
     } else {
         richlist= JSON.parse(syncRequest('GET', config.node + '/debug/stateTN/' + config.endBlock, {
             'headers': {
-                'Connection': 'keep-alive'
+                'Connection': 'keep-alive',
+                'api-key': config.apiKey
             }
         }).getBody());
     }
